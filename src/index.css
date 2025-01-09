@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  background-color: hsl(204, 35%, 92%);
+}
+.important{
+  background-color: white !important;
+}
 .side-nav-bg{
   background-image: url(./public/images/bg-sidebar-mobile.svg);
   background-position: center;
@@ -11,4 +17,149 @@
 }
 .go-back{
   @apply bg-red
+}
+.user-input{
+  @apply placeholder:text-gray mb-2 border border-gray w-full rounded p-2 outline-none focus:border-deepBlue text-deepBlue font-medium
+}
+.form-group{
+  @apply mb-3 
+}
+.back-shadow{
+  box-shadow: 0px 6px 17px -7px hsl(231, 11%, 63%);
+}
+.title {
+  @apply text-2xl text-deepBlue font-bold mb-4
+}
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.toggle-switch input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-switch-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 2px #ccc;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.toggle-switch-handle {
+  position: absolute;
+  top: 2.5px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  right: -35px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #aaa;
+  text-shadow: 1px 1px #fff;
+  transition: color 0.3s ease-in-out;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-handle {
+  transform: translateX(45px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 3px hsl(213, 96%, 18%);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-background {
+  background-color: hsl(213, 96%, 18%);
+  box-shadow: inset 0 0 0 2px hsl(243, 100%, 62%);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch:before {
+  content: "On";
+  color: hsl(213, 96%, 18%);
+  right: -5px;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-background .toggle-switch-handle {
+  transform: translateX(24.5px);
+}
+
+
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none; 
+}
+
+.custom-checkbox label {
+  position: relative;
+  padding-left: 30px; 
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-checkbox label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: 2px solid hsl(229, 24%, 87%);
+  border-radius: 4px;
+  background-color: #fff;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label::before {
+  background-color: hsl(243 100% 62%);
+  border-color: hsl(243 100% 62%);
+}
+.custom-checkbox input[type="checkbox"]:checked + .add-on {
+  background-color: hsl(243 100% 62%);
+  border-color: hsl(243 100% 62%);
+}
+
+.custom-checkbox label::after {
+  content: "";
+  position: absolute;
+  left: 8.5px;
+  top: -2px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 7px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.05s;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label::after {
+  opacity: 1;
+}
+
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

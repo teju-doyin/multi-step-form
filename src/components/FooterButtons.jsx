@@ -1,10 +1,18 @@
 import React from 'react'
-
-const FooterButtons = ({lightButtonText, buttonText}) => {
+import { Link } from 'react-router-dom'
+const FooterButtons = ({lightButtonText, buttonText, linkBack, linkNext}) => {
   return (
-    <div className='bg-white absolute bottom-8 right-4'>
-        <button>{lightButtonText}</button>
-        <button className='bg-deepBlue rounded text-white px-3 py-2' >{buttonText}</button>
+    <div className=' important w-full '>
+        <div className=" bg-white absolute bottom-0 py-8 px-5 w-full flex justify-between items-center">
+          <Link to={linkBack}>
+            <button className='text-gray font-semibold'>{lightButtonText}</button>
+          </Link>
+          <Link to={linkNext}>
+            <button className='bg-deepBlue rounded text-white px-3 py-2' >
+              {buttonText}
+            </button>
+          </Link>
+        </div>
     </div>
   )
 }
