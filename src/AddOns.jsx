@@ -14,7 +14,7 @@ const AddOns = () => {
       }
     });
   };
-  console.log(selectedAddOn)
+  // console.log(selectedAddOn)
   const addOns = [
     {
       id:1,
@@ -50,7 +50,7 @@ const AddOns = () => {
           const isSelected = selectedAddOn.some((item) => item.id === addOn.id);
           return (
           <div 
-            className={` flex mb-5 justify-between items-center border border-lightGray  ${isSelected?'border border-blue bg-veryLightBlue':'border-lightGray'} rounded-md p-3 cursor-default`} 
+            className={` flex mb-5 justify-between items-center border border-lightGray  ${isSelected?'border border-deepBlue bg-veryLightBlue':'border-lightGray'} rounded-md p-3 cursor-default`} 
             key={addOn.id}>
             <div className="flex justify-between items-center gap-2">
               <div className="custom-checkbox" >
@@ -74,7 +74,7 @@ const AddOns = () => {
       </section>
         
     </PageBackground>
-    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='/plan' linkNext='/summary'/>
+    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='/plan' linkNext='/summary' style='bg-deepBlue'/>
     </>
   )
 }

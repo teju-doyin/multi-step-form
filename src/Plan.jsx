@@ -9,21 +9,21 @@ const Plan = () => {
     {
       id:1,
       name: "Arcade",
-      image: '../../public/images/icon-arcade.svg',
+      image: '/images/icon-arcade.svg',
       pricePerMonth: 9,
       pricePerYear:90,
     },
     {
       id:2,
       name: "Advanced",
-      image: '../../public/images/icon-advanced.svg',
+      image: '/images/icon-advanced.svg',
       pricePerMonth: 12,
       pricePerYear:120,
     },
     {
       id:3,
       name: "Pro",
-      image: '../../public/images/icon-pro.svg',
+      image: '/images/icon-pro.svg',
       pricePerMonth: 15,
       pricePerYear:150,
     },
@@ -59,7 +59,7 @@ const Plan = () => {
         </div>
       </section>
     </PageBackground>
-    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='../' linkNext='../add-ons'/>
+    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='../' linkNext='../add-ons' style='bg-deepBlue'/>
     </>
   )
 }

@@ -34,7 +34,7 @@ const Info = () => {
           </div>
         </form>
     </PageBackground>
-    <FooterButtons  lightButtonText='' buttonText='Next Step' linkBack='' linkNext='./plan'/>
+    <FooterButtons  lightButtonText='' buttonText='Next Step' linkBack='' linkNext='./plan' style='bg-deepBlue'/>
     </>
   )
 }
