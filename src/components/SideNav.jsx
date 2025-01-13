@@ -25,7 +25,7 @@ const SideNav = () => {
     ]
   return (
     <div  className='bg- side-nav-bg  '>
-        <div className=" flex justify-between items-center w-[70%] mx-auto pt-12 pb-16">
+        <div className=" flex justify-between items-center w-[70%] mx-auto pt-6 pb-14">
             {navLinks.map((link, index)=>(
                 <NavLink 
                     key={index} 
