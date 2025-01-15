@@ -5,6 +5,11 @@
 body{
   background-color: hsl(204, 35%, 92%);
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .important{
   background-color: white !important;
 }
@@ -14,6 +19,13 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   /* height: 35dvh; */
+}
+
+.error-message{
+  @apply text-red font-medium text-sm
+}
+.label-section{
+  @apply mb-1 flex justify-between items-center
 }
 .go-back{
   @apply bg-red

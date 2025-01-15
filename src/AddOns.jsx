@@ -4,8 +4,10 @@ import PageBackground from './components/PageBackground'
 
 const AddOns = () => {
   const [selectedAddOn, setSelectedAddOn] = useState ([])
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
   
   const handleSelectedAddOn = (addOn) => {
+    setShowErrorMessage(false)
     setSelectedAddOn((prev) => {
       if (prev.find((item) => item.id === addOn.id)) {
         return prev.filter((item) => item.id !== addOn.id);
@@ -14,7 +16,13 @@ const AddOns = () => {
       }
     });
   };
-  // console.log(selectedAddOn)
+  const handleSubmit = () => {  
+    if(selectedAddOn.length == 0) {
+      setShowErrorMessage(true)
+    }
+  }
+  console.log(selectedAddOn.length)
+
   const addOns = [
     {
       id:1,
@@ -46,6 +54,7 @@ const AddOns = () => {
         <p className='text-gray mb-7'>Add-ons help enhance your gaming experience.</p>
       </div>
       <section className='w-[85%]  mx-auto'>
+        {showErrorMessage && <p className='error-message mb-2'>Please select at least 1 add on</p>}
         {addOns.map((addOn)=>{
           const isSelected = selectedAddOn.some((item) => item.id === addOn.id);
           return (
@@ -74,7 +83,14 @@ const AddOns = () => {
       </section>
         
     </PageBackground>
-    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='/plan' linkNext='/summary' style='bg-deepBlue'/>
+    <FooterButtons
+      lightButtonText='Go Back'
+      buttonText='Next Step' 
+      linkBack='/plan' 
+      linkNext={selectedAddOn.length==0?'': '/summary'} 
+      style='bg-deepBlue'
+      handleNext={handleSubmit}
+    />
     </>
   )
 }

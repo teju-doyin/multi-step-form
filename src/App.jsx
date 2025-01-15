@@ -8,7 +8,7 @@ import AddOns from './AddOns'
 import Summary from './Summary'
 
 function App() {
-
+  const [selectedOptions, setSelectedOptions] = useState([{}])
   return (
     <Router>
       <div>

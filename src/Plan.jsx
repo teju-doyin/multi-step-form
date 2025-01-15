@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FooterButtons from './components/FooterButtons'
 import PageBackground from './components/PageBackground'
-import { Switch } from "@/components/ui/switch"
-
+import { useNavigate } from 'react-router-dom'
 
 const Plan = () => {
+  const [isYearly, setIsYearly] = useState(false)
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState (null)
+  const navigate = useNavigate()
+  const handleToggleSwitch = () => setIsYearly( (prev)=> !prev)
+    
+  const handleSelectedPlan =(plan)=>{
+    setShowErrorMessage(false)
+    setSelectedPlan(plan)
+  }
+  const handleSubmit = () => {
+    if(!selectedPlan) {
+      setShowErrorMessage(true)
+      // return
+    }else{
+      navigate('../add-ons')
+    }
+    console.log(selectedPlan)
+  }
+  console.log(isYearly)
   const plans=[
     {
       id:1,
@@ -28,6 +47,7 @@ const Plan = () => {
       pricePerYear:150,
     },
   ]
+
   return (
     <>
     <PageBackground>
@@ -36,30 +56,45 @@ const Plan = () => {
         <p className='text-gray mb-7'>You have the option of monthly or yearly billing</p>
       </div>
       <section className="w-[85%]  mx-auto ">
+        {showErrorMessage && <p className='error-message'>You must select a plan</p>}
         {plans.map((plan)=> (
-          <div key={plan.id} className="flex gap-5 cursor-pointer border border-lightGray rounded-md mb-5 p-3">
+          <div 
+            onClick={()=>handleSelectedPlan(plan)}
+            key={plan.id} 
+            className={`flex gap-5 items-start cursor-pointer border ${selectedPlan?.id==plan.id?'border-deepBlue' : 'border-lightGray'}  rounded-md mb-5 p-3`}>
             <img src={plan.image} alt=""/>
             <div>
               <h4 className='text-deepBlue font-semibold'>{plan.name}</h4>
-              <span className='text-gray'>${plan.pricePerMonth}/mo</span>
-              <span></span>
+              <span className='text-gray'>${isYearly? plan.pricePerYear +'/yr' : plan.pricePerMonth +'/mo'}</span>
+              {isYearly && <p className='font-medium text-deepBlue'>2 months free</p>}
             </div>
           </div>
         ))}
 
         <div className="flex items-center w-[70%] mx-auto justify-between mt-8">
-          <span className='font-medium text-deepBlue'>Monthly</span>
+          <span className={`font-semibold  ${isYearly?' text-gray':'text-deepBlue'}`}>Monthly</span>
           <label className="toggle-switch w-[50%]">
-            <input type="checkbox"/>
+            <input 
+              type="checkbox" 
+              onChange={handleToggleSwitch} 
+              checked={isYearly}
+            />
             <div className="toggle-switch-background">
               <div className="toggle-switch-handle"></div>
             </div>
           </label>
-          <span className='font-medium text-deepBlue'>Yearly</span>
+          <span className={`font-semibold ${isYearly?'text-deepBlue':'text-gray'}`}>Yearly</span>
         </div>
       </section>
     </PageBackground>
-    <FooterButtons  lightButtonText='Go Back' buttonText='Next Step' linkBack='../' linkNext='../add-ons' style='bg-deepBlue'/>
+    <FooterButtons  
+      lightButtonText='Go Back' 
+      buttonText='Next Step' 
+      linkBack='../' 
+      linkNext={!selectedPlan? '':'../add-ons' }
+      style='bg-deepBlue'
+      handleNext={handleSubmit}
+    />
     </>
   )
 }
