@@ -1,5 +1,5 @@
 import React from 'react'
-import PageBackground from './components/PageBackground'
+import PageBackground from '../components/PageBackground'
 import complete from '/images/icon-thank-you.svg'
 const Complete = () => {
   return (

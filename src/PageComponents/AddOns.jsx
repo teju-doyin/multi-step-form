@@ -1,25 +1,21 @@
 import React, { useState } from 'react'
-import FooterButtons from './components/FooterButtons'
-import PageBackground from './components/PageBackground'
+import FooterButtons from '../components/FooterButtons'
+import PageBackground from '../components/PageBackground'
+import { useForm } from '@/JS/FormContext'
+
 
 const AddOns = () => {
-  const [selectedAddOn, setSelectedAddOn] = useState ([])
+  const { selectedAddOn, handleSelectedAddOn } = useForm();
   const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const {  formData, isYearly } = useForm();
   
-  const handleSelectedAddOn = (addOn) => {
-    setShowErrorMessage(false)
-    setSelectedAddOn((prev) => {
-      if (prev.find((item) => item.id === addOn.id)) {
-        return prev.filter((item) => item.id !== addOn.id);
-      } else {
-        return [...prev, addOn];
-      }
-    });
-  };
+  
+ 
   const handleSubmit = () => {  
     if(selectedAddOn.length == 0) {
       setShowErrorMessage(true)
-    }
+    } else setShowErrorMessage(false)
+
   }
   console.log(selectedAddOn.length)
 
@@ -77,7 +73,7 @@ const AddOns = () => {
                 <p className='text-gray text-[.9rem]'>{addOn.detail}</p>
               </div>
             </div>
-            <span className='text-blue font-medium text-[.9rem]'>+${addOn.pricePerMonth}/mo</span>
+            <span className='text-blue font-medium text-[.9rem]'>+${isYearly?addOn.pricePerYear: addOn.pricePerMonth}/{isYearly?"yr": "mo"}</span>
           </div>
         )})}
       </section>

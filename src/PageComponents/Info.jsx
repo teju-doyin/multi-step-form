@@ -1,20 +1,21 @@
 import React, {useState} from 'react'
-import FooterButtons from './components/FooterButtons'
-import PageBackground from './components/PageBackground'
-import { validateForm } from './JS/FormValidation'
+import FooterButtons from '../components/FooterButtons'
+import PageBackground from '../components/PageBackground'
+import { validateForm } from '../JS/FormValidation'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from '@/JS/FormContext'
+
 const Info = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+
+  const { formData, setFormData } = useForm();
   const [errors, setErrors] = useState({})
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validateForm(formData);
@@ -25,7 +26,8 @@ const Info = () => {
       console.log('Form submitted:', formData);
       navigate('./plan')
     }
-  };
+  }
+
   return (
     <>
     <PageBackground>

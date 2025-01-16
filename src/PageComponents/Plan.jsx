@@ -1,27 +1,28 @@
 import React, { useState } from 'react'
-import FooterButtons from './components/FooterButtons'
-import PageBackground from './components/PageBackground'
+import FooterButtons from '../components/FooterButtons'
+import PageBackground from '../components/PageBackground'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from '@/JS/FormContext'
 
 const Plan = () => {
-  const [isYearly, setIsYearly] = useState(false)
-  const [showErrorMessage, setShowErrorMessage] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState (null)
   const navigate = useNavigate()
-  const handleToggleSwitch = () => setIsYearly( (prev)=> !prev)
+  
+  const { formData, setFormData, isYearly, handleToggleSwitch } = useForm();
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
+
     
   const handleSelectedPlan =(plan)=>{
     setShowErrorMessage(false)
-    setSelectedPlan(plan)
+    setFormData({...formData, selectedPlan: plan})
   }
   const handleSubmit = () => {
-    if(!selectedPlan) {
+    if(!formData.selectedPlan) {
       setShowErrorMessage(true)
       // return
     }else{
       navigate('../add-ons')
     }
-    console.log(selectedPlan)
+    console.log(formData.selectedPlan)
   }
   console.log(isYearly)
   const plans=[
@@ -61,7 +62,7 @@ const Plan = () => {
           <div 
             onClick={()=>handleSelectedPlan(plan)}
             key={plan.id} 
-            className={`flex gap-5 items-start cursor-pointer border ${selectedPlan?.id==plan.id?'border-deepBlue' : 'border-lightGray'}  rounded-md mb-5 p-3`}>
+            className={`flex gap-5 items-start cursor-pointer border ${formData.selectedPlan?.id === plan.id?'border-deepBlue' : 'border-lightGray'}  rounded-md mb-5 p-3`}>
             <img src={plan.image} alt=""/>
             <div>
               <h4 className='text-deepBlue font-semibold'>{plan.name}</h4>
@@ -91,7 +92,7 @@ const Plan = () => {
       lightButtonText='Go Back' 
       buttonText='Next Step' 
       linkBack='../' 
-      linkNext={!selectedPlan? '':'../add-ons' }
+      linkNext={!formData.selectedPlan? '':'../add-ons' }
       style='bg-deepBlue'
       handleNext={handleSubmit}
     />

@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import FooterButtons from './components/FooterButtons'
-import PageBackground from './components/PageBackground'
+import FooterButtons from '../components/FooterButtons'
+import PageBackground from '../components/PageBackground'
 import { Link } from 'react-router-dom'
 import Complete from './Complete'
+import { useForm } from '@/JS/FormContext'
+
+
 const Summary = () => {
   const [showCompleteModal, setShowCompleteModal] = useState(false)
+  const { selectedAddOn, formData, isYearly } = useForm();
 
   const handleModalDisplay=()=>{
     setShowCompleteModal(true)
@@ -31,7 +35,7 @@ const Summary = () => {
       <Complete/>
     )
   }
-
+  console.log(formData.selectedPlan)
   return (
     
     <>
@@ -41,34 +45,34 @@ const Summary = () => {
         <p className='text-gray mb-7'>Double-check everything looks OK before confirming.</p>
       </div>
       <section className="w-[90%]  mx-auto ">
-        {planSummary.map((info,index)=>(
+        
           <>
-          <div key={index}className="bg-veryLightBlue rounded-lg mb-4 " >
+          <div className="bg-veryLightBlue rounded-lg mb-4 " >
             <div className="w-[90%]  mx-auto py-4">
               <div className="flex justify-between items-center">
                 <div className="">
-                  <p className='text-deepBlue font-semibold'>{info.plan} ({info.renewal})</p>
+                  <p className='text-deepBlue font-semibold'>{formData.selectedPlan?.name} ({isYearly?"Yearly": "Monthly"})</p>
                   <Link to='/plan' className=' underline text-gray'>Change</Link>
                 </div>
-                <span className='text-deepBlue font-bold'>${info.price}/mo</span>
+                <span className='text-deepBlue font-bold'>${isYearly?formData.selectedPlan.pricePerYear: formData.selectedPlan?.pricePerMonth}/{isYearly?"yr": "mo"}</span>
               </div>
               <div className="h-[1px] w-full bg-lightGray my-4"></div>
               <div className="">
-                {info.addOns.map((addOn)=>(
-                  <p key={addOn.id} className="flex justify-between items-center mb-3">
+                {selectedAddOn.map((addOn,index)=>(
+                  <p key={index} className="flex justify-between items-center mb-3">
                     <span className='text-gray'>{addOn.title}</span>
-                    <span className='text-deepBlue font-med'>+${addOn.price}/mo</span>
+                    <span className='text-deepBlue font-med'>+${isYearly?addOn.pricePerYear: addOn.pricePerMonth}/{isYearly?"yr": "mo"}</span>
                   </p>
                 ))}
               </div>
             </div>
           </div>
           <p className='w-[90%]  mx-auto  flex justify-between items-center'>
-            <span className='text-gray'>Total (per month)</span>
-            <span className='text-blue font-bold'>+${info.total}/mo</span>
+            <span className='text-gray'>Total (per {isYearly?"year": "month"})</span>
+            <span className='text-blue font-bold'>+$/{isYearly?"yr": "mo"}</span>
           </p>
           </>
-        ))}
+        
       </section>
     </PageBackground>
     <FooterButtons  lightButtonText='Go Back' buttonText='Confirm' linkBack='/add-ons' linkNext='' style='bg-blue' handleNext={handleModalDisplay}/>
