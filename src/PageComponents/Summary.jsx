@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FooterButtons from '../components/FooterButtons'
 import PageBackground from '../components/PageBackground'
 import { Link } from 'react-router-dom'
@@ -13,29 +13,20 @@ const Summary = () => {
   const handleModalDisplay=()=>{
     setShowCompleteModal(true)
   }
-  const planSummary = [{
-    plan: "Arcade",
-    renewal: "Monthly",
-    price: 9,
-    addOns: [
-    {
-      id: 1,
-      title: "Online service",
-      price: 1,
-    },
-    {
-      id: 2,
-      title: "Larger storage",
-      price: 2,
-    }],
-    total: 12
-  }]
-  if (showCompleteModal){
-    return(
-      <Complete/>
-    )
+  
+  const totalAddons = () =>{
+    if (!selectedAddOn || selectedAddOn.lenght ===0) return 0
+    return selectedAddOn.reduce((acc,curr) =>{
+      return acc + (isYearly ? curr.pricePerYear: curr.pricePerMonth)
+    }, 0)
   }
-  console.log(formData.selectedPlan)
+
+  const totalInvoice =()=>{
+    return totalAddons() + (isYearly? formData.selectedPlan?.pricePerYear: formData.selectedPlan?.pricePerMonth) 
+  }
+  
+  if (showCompleteModal) return <Complete/>
+
   return (
     
     <>
@@ -69,13 +60,20 @@ const Summary = () => {
           </div>
           <p className='w-[90%]  mx-auto  flex justify-between items-center'>
             <span className='text-gray'>Total (per {isYearly?"year": "month"})</span>
-            <span className='text-blue font-bold'>+$/{isYearly?"yr": "mo"}</span>
+            <span className='text-blue font-bold'>+${totalInvoice()}/{isYearly?"yr": "mo"}</span>
           </p>
           </>
         
       </section>
     </PageBackground>
-    <FooterButtons  lightButtonText='Go Back' buttonText='Confirm' linkBack='/add-ons' linkNext='' style='bg-blue' handleNext={handleModalDisplay}/>
+    <FooterButtons
+      lightButtonText='Go Back'
+      buttonText='Confirm'
+      linkBack='/add-ons'
+      linkNext=''
+      style='bg-blue'
+      handleNext={handleModalDisplay}
+    />
     </>
   )
 }
